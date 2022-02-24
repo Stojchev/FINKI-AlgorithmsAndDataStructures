@@ -1,140 +1,140 @@
-//import java.lang.reflect.Array;
-//import java.util.Scanner;
-//
-//public class ConsecutiveNumbers {
-//
-//    public static void main(String[] args) {
-//
-//        Scanner scan = new Scanner(System.in);
-//
-//        BTree<Integer> btree = new BTree();
-//        int n = scan.nextInt();
-//        BNode<Integer> nodes[] = new BNode[n];
-//
-//        for (int i = 0; i < n; ++i) {
-//            int index = scan.nextInt();
-//            int value = scan.nextInt();
-//            String where = scan.next();
-//            if (where.equals("ROOT")) {
-//                nodes[index] = btree.makeRoot(value);
-//                scan.nextLine();
-//            } else {
-//                int whereTo = 1;
-//                if (where.equals("RIGHT"))
-//                    whereTo = 2;
-//                int whichNode = scan.nextInt();
-//                scan.nextLine();
-//                nodes[index] = btree.addChild(nodes[whichNode], whereTo, value);
-//            }
-//        }
-//
-//        System.out.println(check(btree));
-//    }
-//
-//    public static boolean check(BTree<Integer> tree) {
-//
-//        BNode<Integer> curr = tree.head;
-//        while (curr.ltag == '+')
-//            curr = curr.left;
-//        BNode<Integer> succ = tree.successorInorder(curr);
-//        while (curr != tree.head) {
-//            if(curr.info-succ.info==-1)
-//            {
-//                curr=succ;
-//                succ = tree.successorInorder(succ);
-//            }else return false;
-//        }
-//        return true;
-//    }
-//}
-//
-//class BNode<E> {
-//
-//    public E info;
-//    public BNode<E> left;
-//    public BNode<E> right;
-//    char ltag;
-//    char rtag;
-//
-//    static int LEFT = 1;
-//    static int RIGHT = 2;
-//
-//    public BNode(E info) {
-//        this.info = info;
-//        left = null;
-//        right = null;
-//        ltag = '-';
-//        rtag = '-';
-//    }
-//
-//}
-//
-//class BTree<E> {
-//
-//    public BNode<E> head;
-//
-//    public BTree() {
-//        head = new BNode<E>(null);
-//        // po definicija ako nema koren, t.e. ako stebloto e prazno
-//        head.left = head;
-//        head.ltag = '-';
-//        // kaj vodacot sekogas desnata vrska pokazuva kon samiot sebe
-//        head.right = head;
-//        head.rtag = '+';
-//    }
-//
-//    public BNode<E> makeRoot(E elem) {
-//        BNode<E> tmp = new BNode<E>(elem);
-//        head.left = tmp;
-//        head.ltag = '+';
-//
-//        tmp.left = head;
-//        tmp.ltag = '-';
-//        tmp.right = head;
-//        tmp.rtag = '-';
-//
-//        return tmp;
-//    }
-//
-//    public BNode<E> addChild(BNode<E> node, int where, E elem) {
-//        BNode<E> tmp = new BNode<E>(elem);
-//
-//        if (where == BNode.LEFT) {
-//
-//            if (node.ltag == '+')   // veke postoi element
-//                return null;
-//
-//            tmp.left = node.left;
-//            tmp.ltag = '-';
-//            tmp.right = node;
-//            tmp.rtag = '-';
-//            node.left = tmp;
-//            node.ltag = '+';
-//        } else {
-//
-//            if (node.rtag == '+')   // veke postoi element
-//                return null;
-//
-//            tmp.right = node.right;
-//            tmp.rtag = '-';
-//            tmp.left = node;
-//            tmp.ltag = '-';
-//            node.right = tmp;
-//            node.rtag = '+';
-//        }
-//
-//        return tmp;
-//    }
-//
-//    public BNode<E> successorInorder(BNode<E> node) {
-//
-//        if (node.rtag == '-')
-//            return node.right;
-//
-//        BNode<E> temp = node.right;
-//        while (temp.ltag != '-')
-//            temp = temp.left;
-//        return temp;
-//    }
-//
-//}
+import java.lang.reflect.Array;
+import java.util.Scanner;
+
+public class ConsecutiveNumbers {
+
+   public static void main(String[] args) {
+
+       Scanner scan = new Scanner(System.in);
+
+       BTree<Integer> btree = new BTree();
+       int n = scan.nextInt();
+       BNode<Integer> nodes[] = new BNode[n];
+
+       for (int i = 0; i < n; ++i) {
+           int index = scan.nextInt();
+           int value = scan.nextInt();
+           String where = scan.next();
+           if (where.equals("ROOT")) {
+               nodes[index] = btree.makeRoot(value);
+               scan.nextLine();
+           } else {
+               int whereTo = 1;
+               if (where.equals("RIGHT"))
+                   whereTo = 2;
+               int whichNode = scan.nextInt();
+               scan.nextLine();
+               nodes[index] = btree.addChild(nodes[whichNode], whereTo, value);
+           }
+       }
+
+       System.out.println(check(btree));
+   }
+
+   public static boolean check(BTree<Integer> tree) {
+
+       BNode<Integer> curr = tree.head;
+       while (curr.ltag == '+')
+           curr = curr.left;
+       BNode<Integer> succ = tree.successorInorder(curr);
+       while (curr != tree.head) {
+           if(curr.info-succ.info==-1)
+           {
+               curr=succ;
+               succ = tree.successorInorder(succ);
+           }else return false;
+       }
+       return true;
+   }
+}
+
+class BNode<E> {
+
+   public E info;
+   public BNode<E> left;
+   public BNode<E> right;
+   char ltag;
+   char rtag;
+
+   static int LEFT = 1;
+   static int RIGHT = 2;
+
+   public BNode(E info) {
+       this.info = info;
+       left = null;
+       right = null;
+       ltag = '-';
+       rtag = '-';
+   }
+
+}
+
+class BTree<E> {
+
+   public BNode<E> head;
+
+   public BTree() {
+       head = new BNode<E>(null);
+       // po definicija ako nema koren, t.e. ako stebloto e prazno
+       head.left = head;
+       head.ltag = '-';
+       // kaj vodacot sekogas desnata vrska pokazuva kon samiot sebe
+       head.right = head;
+       head.rtag = '+';
+   }
+
+   public BNode<E> makeRoot(E elem) {
+       BNode<E> tmp = new BNode<E>(elem);
+       head.left = tmp;
+       head.ltag = '+';
+
+       tmp.left = head;
+       tmp.ltag = '-';
+       tmp.right = head;
+       tmp.rtag = '-';
+
+       return tmp;
+   }
+
+   public BNode<E> addChild(BNode<E> node, int where, E elem) {
+       BNode<E> tmp = new BNode<E>(elem);
+
+       if (where == BNode.LEFT) {
+
+           if (node.ltag == '+')   // veke postoi element
+               return null;
+
+           tmp.left = node.left;
+           tmp.ltag = '-';
+           tmp.right = node;
+           tmp.rtag = '-';
+           node.left = tmp;
+           node.ltag = '+';
+       } else {
+
+           if (node.rtag == '+')   // veke postoi element
+               return null;
+
+           tmp.right = node.right;
+           tmp.rtag = '-';
+           tmp.left = node;
+           tmp.ltag = '-';
+           node.right = tmp;
+           node.rtag = '+';
+       }
+
+       return tmp;
+   }
+
+   public BNode<E> successorInorder(BNode<E> node) {
+
+       if (node.rtag == '-')
+           return node.right;
+
+       BNode<E> temp = node.right;
+       while (temp.ltag != '-')
+           temp = temp.left;
+       return temp;
+   }
+
+}
